@@ -1,30 +1,22 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './styling/displaycard.css'
 import TinderCard from 'react-tinder-card'
+import axios from '../axios.js'
 
 function DisplayCard() {
-    const [people, setPeople] = useState([
-        {
-            name: "person One",
-            url: "https://images.unsplash.com/photo-1586257097150-4d26a156d5ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=632&q=80"
-        },
-        {
-            name: "person Two",
-            url: "https://images.unsplash.com/photo-1559554609-1361c33dd382?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-        },
-        {
-            name: "person Three",
-            imgUrl: "https://images.unsplash.com/photo-1488751045188-3c55bbf9a3fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-        },
-        {
-            name: "person Four",
-            imgUrl: "https://images.unsplash.com/photo-1558220829-f1856c69ee83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-        },
-        {
-            name: "person Five",
-            imgUrl: "https://images.unsplash.com/photo-1524293568345-75d62c3664f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-        }
-    ])
+    const [people, setPeople] = useState([])
+
+    useEffect(() => {
+
+        async function fetchData() {
+            const req = await axios.get('/social/card')
+
+            setPeople(req.data)
+        };
+
+        fetchData()
+    },[])
+
 
     const swiped = (direction, nameToDelete) => {
         console.log("removing" + nameToDelete)
@@ -47,7 +39,7 @@ function DisplayCard() {
                     onCardLeftScreen={() => outOfFrame(person.name)}
                     >
                         <div 
-                        style={{backgroundImage:`url(${person.url})`}}
+                        style={{backgroundImage:`url(${person.imgUrl})`}}
                         className="card"
                         >
                             <h3>{person.name}</h3>
