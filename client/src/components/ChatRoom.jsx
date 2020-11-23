@@ -1,8 +1,46 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './styling/chatroom.css'
 import Grid from '@material-ui/core/Grid';
+import { io } from 'socket.io-client'
+import TextField from '@material-ui/core/TextField'
+
+const socket = io();
+
 
 function ChatRoom() {
+
+    const [state, setState] = useState({message: '', name: ''})
+    const [chat, setChat] = useState([])
+
+    useEffect(() => {
+        socket.on('message', ({name, message}) => {
+            setChat([...chat, {name,message}])
+        })
+    },[])
+
+
+    // functions
+    const onTextChange =(res) => {
+        setState({...state, [res.target.name]: res.target.value})
+    }
+
+    const onMessageSubmit = (e) => {
+        e.preventDefault()
+        
+        const {name, message} = state
+        socket.emit('message', {name, message})
+        setState({message:'', name})
+    }
+
+    const renderChat = ()=> {
+        return chat.map(({name, message,}, index) => (
+            <div key={index}>
+                <h3>{name}: <span>{message}</span></h3>
+            </div>
+        ))
+    }
+
+
     return (
         <Grid 
         container
@@ -11,23 +49,32 @@ function ChatRoom() {
         alignItems="baseline"
         className="chatRoom__container"
         >
-            
-            <div className="current__users">
-                <h3>Current Users</h3>
-                <div className="display__users">
-                    <p>test</p>
+            <form onSubmit={onMessageSubmit}>
+                <h2>ChatBox</h2>
+                <div className="name__field">
+                    <TextField
+                    name="name"
+                    onChange={ res=> onTextChange(res)}
+                    value={state.name}
+                    label="Name
+                    "/>
                 </div>
-            </div>
+                <div>
+                    <TextField
+                    name="message"
+                    onChange={res => onTextChange(res)}
+                    value={state.message}
+                    label="Message"
+                    id="outlined-multiline-static"
+                    variant="outlined"
+                    />
+                </div>
+                <button> Send </button>
+            </form>
 
-            <div className="chatBox">
-                <p>This will be the chatbox</p>
-            </div>
-
-            <div className="chatRoom__buttons">
-
-                <textarea/>
-                <button type="submit">Send</button>
-
+            <div className="render__chat">
+                <h1>ChatLog</h1>
+                {renderChat()}
             </div>
 
         </Grid>
