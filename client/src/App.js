@@ -11,7 +11,6 @@ import ChatRoom from './components/ChatRoom'
 function App() {
   return (
     <Router>
-      <div className="app">
         <Switch>
           <Route path='/account'>
             <Account/>
@@ -30,7 +29,6 @@ function App() {
             <User/>
           </Route>
         </Switch>
-      </div>
     </Router>
       
   );

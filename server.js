@@ -2,10 +2,16 @@ import express from 'express'
 import mongoose from 'mongoose'
 import Cards from './models/dbCards.js'
 import Cors from 'cors'
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 // app configuration
 const app = express()
 const port = process.env.PORT || 3001
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  // ...
+});
 const connection_url = 'mongodb+srv://Admin:3ngLrhWieXCeqSWL@cluster0.ebinh.mongodb.net/social-app?retryWrites=true&w=majority'
 
 // middleware
@@ -46,5 +52,12 @@ app.get('/social/card', (req, res) => {
     })
 })
 
+// SocketIo Server Init
+io.on("connection", (socket) => {
+    socket.on("Message", ({name, message}) => {
+        io.emit('Message', {name, message})
+    })
+});
+
 // Listener
-app.listen(port, () => console.log(`Listening on localhost:${port}`))
+httpServer.listen(port, () => console.log(`Listening on localhost:${port}`))
