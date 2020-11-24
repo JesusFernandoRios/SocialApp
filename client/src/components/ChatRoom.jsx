@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { io } from 'socket.io-client'
 import TextField from '@material-ui/core/TextField'
 
-const socket = io();
+const socket = io("http://localhost:3001/");
 
 
 function ChatRoom() {
@@ -13,26 +13,38 @@ function ChatRoom() {
     const [chat, setChat] = useState([])
 
     useEffect(() => {
-        socket.on('message', ({name, message}) => {
-            setChat([...chat, {name,message}])
+        
+        socket.on('connect', () => {
+            console.log("this is the socket id" + socket.id)
+            
         })
-    },[])
+
+        socket.on('message', ({name, message}) => {
+            console.log("this is the socket id" + socket.id)
+
+            setChat([...chat, {name, message}])
+            
+        })
+    })
 
 
     // functions
-    const onTextChange =(res) => {
+    const onTextChange = (res) => {
+        console.log(res)
         setState({...state, [res.target.name]: res.target.value})
     }
 
     const onMessageSubmit = (e) => {
         e.preventDefault()
+        console.log(e)
+        console.log(state)
         
         const {name, message} = state
         socket.emit('message', {name, message})
         setState({message:'', name})
     }
 
-    const renderChat = ()=> {
+    const renderChat = () => {
         return chat.map(({name, message,}, index) => (
             <div key={index}>
                 <h3>{name}: <span>{message}</span></h3>

@@ -10,8 +10,14 @@ const app = express()
 const port = process.env.PORT || 3001
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-  // ...
-});
+    cors:{
+        origin: "*",
+        methods: ["GET",'POST'],
+    }
+}
+);
+
+
 const connection_url = 'mongodb+srv://Admin:3ngLrhWieXCeqSWL@cluster0.ebinh.mongodb.net/social-app?retryWrites=true&w=majority'
 
 // middleware
@@ -27,7 +33,7 @@ mongoose.connect(connection_url,{
 
 // API Endpoints
 app.get('/',(req, res) => {
-    res.status(200).send("Hello World")
+    res.status(200).send("Server is On")
 })
 
 app.post('/social/card', (req, res) => {
@@ -54,6 +60,8 @@ app.get('/social/card', (req, res) => {
 
 // SocketIo Server Init
 io.on("connection", (socket) => {
+    console.log("your id", socket.id)
+
     socket.on("Message", ({name, message}) => {
         io.emit('Message', {name, message})
     })
