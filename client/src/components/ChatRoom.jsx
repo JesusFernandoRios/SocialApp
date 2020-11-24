@@ -14,13 +14,8 @@ function ChatRoom() {
 
     useEffect(() => {
         
-        socket.on('connect', () => {
-            console.log("this is the socket id" + socket.id)
-            
-        })
-
         socket.on('message', ({name, message}) => {
-            console.log("this is the socket id" + socket.id)
+            console.log("this is the socket id")
 
             setChat([...chat, {name, message}])
             

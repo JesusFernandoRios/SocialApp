@@ -62,8 +62,8 @@ app.get('/social/card', (req, res) => {
 io.on("connection", (socket) => {
     console.log("your id", socket.id)
 
-    socket.on("Message", ({name, message}) => {
-        io.emit('Message', {name, message})
+    socket.on("message", ({name, message}) => {
+        io.emit('message', {name, message})
     })
 });
 
