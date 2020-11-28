@@ -49,13 +49,7 @@ function ChatRoom() {
 
 
     return (
-        <Grid 
-        container
-        direction="row"
-        justify="center"
-        alignItems="baseline"
-        className="chatRoom__container"
-        >
+        <div className="chat__container">
             <form onSubmit={onMessageSubmit}>
                 <h2>ChatBox</h2>
                 <div className="name__field">
@@ -84,7 +78,7 @@ function ChatRoom() {
                 {renderChat()}
             </div>
 
-        </Grid>
+        </div>
     )
 }
 

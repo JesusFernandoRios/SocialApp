@@ -7,8 +7,9 @@
     border-radius: 20px;
     padding: 20px;
     height: 60vh;
-    width: 80%;
     max-width: 90%;
+    margin-left: 4%;
+    margin-right: 4%;
 }
 
 .user__image {
