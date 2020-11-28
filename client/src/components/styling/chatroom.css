@@ -1,17 +1,36 @@
 .chat__container {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 10vh;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 5vh;
     box-shadow: 0px 18px 53px 0px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     padding: 20px;
-    height: 60vh;
-    max-width: 90%;
+    height: 80vh;
+    max-width: 100%;
     margin-left: 4%;
     margin-right: 4%;
 }
 
+form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.name__field {
+    float: left;
+}
+
+.chat__message {
+    width: 98%;
+}
+
 .render__chat {
+    width: 98%;
+    height: 70%;
     border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 0px 18px 53px 0px rgba(0, 0, 0, 0.3);
+    padding: 10px;
 }

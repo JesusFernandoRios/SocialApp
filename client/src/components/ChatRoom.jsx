@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import './styling/chatroom.css'
-import Grid from '@material-ui/core/Grid';
 import { io } from 'socket.io-client'
 import TextField from '@material-ui/core/TextField'
 
@@ -50,6 +49,9 @@ function ChatRoom() {
 
     return (
         <div className="chat__container">
+            <div className="render__chat">
+                {renderChat()}
+            </div>
             <form onSubmit={onMessageSubmit}>
                 <h2>ChatBox</h2>
                 <div className="name__field">
@@ -60,7 +62,7 @@ function ChatRoom() {
                     label="Name
                     "/>
                 </div>
-                <div>
+                <div className="chat__message">
                     <TextField
                     name="message"
                     onChange={res => onTextChange(res)}
@@ -68,15 +70,11 @@ function ChatRoom() {
                     label="Message"
                     id="outlined-multiline-static"
                     variant="outlined"
+                    fullWidth
                     />
                 </div>
                 <button> Send </button>
             </form>
-
-            <div className="render__chat">
-                <h1>ChatLog</h1>
-                {renderChat()}
-            </div>
 
         </div>
     )
