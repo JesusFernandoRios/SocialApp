@@ -40,8 +40,8 @@ function ChatRoom() {
 
     const renderChat = () => {
         return chat.map(({name, message,}, index) => (
-            <div key={index}>
-                <h3>{name}: <span>{message}</span></h3>
+            <div className="rendered__chat" key={index}>
+                <h3 className="rendered__name">{name}: <span className="rendered__message">{message}</span></h3>
             </div>
         ))
     }
