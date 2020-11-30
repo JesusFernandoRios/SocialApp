@@ -23,9 +23,10 @@ form {
 }
 
 .render__chat {
-    width: 98%;
+    max-width: 98%;
     height: 70%;
     border-radius: 20px;
+    display: flexbox;
 }
 
 .rendered__name {
@@ -33,7 +34,7 @@ form {
 }
 
 .rendered__message {
-    display: inline-flex;
+    display: flexbox;
     flex-direction: column;
     color: white;
     background-color: darkslategrey;
@@ -45,14 +46,19 @@ form {
 .rendered__chat{
     margin: 10px;
     display: flexbox;
-    overflow-y: auto;
 }
 
 .their__message {    
-    display: inline-flex;
-    text-align: right;
+    display: flexbox;
+    flex-direction: column;
     color: white;
     background-color: purple;
     border-radius: 20px;
     padding: 10px;
+   
+}
+
+.their__chat {
+    margin: 10px;
+    display: flexbox;
 }
