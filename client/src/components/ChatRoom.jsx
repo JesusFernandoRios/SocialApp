@@ -7,67 +7,80 @@ const socket = io("http://localhost:3001/");
 
 
 function ChatRoom() {
-
-    const [state, setState] = useState({message: '', name: ''})
-    const [chat, setChat] = useState([])
+    const [yourID, setYourId] = useState()
+    const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState([])
 
     useEffect(() => {
         
-        socket.on('message', ({name, message}) => {
-            console.log("this is the socket id")
+        socket.on('your id', id => {
+            setYourId(id)
+        })
 
-            setChat([...chat, {name, message}])
-            
+        socket.on('message', message => {
+            receivedMessage(message)
         })
     })
 
 
     // functions
-    const onTextChange = (res) => {
-        console.log(res)
-        setState({...state, [res.target.name]: res.target.value})
+
+    function receivedMessage (message) {
+        setMessages( oldMsgs => [...oldMsgs, message])
     }
 
-    const onMessageSubmit = (e) => {
+    function onTextChange(res) {
+        setMessage(res.target.value)
+    }
+
+    function onMessageSubmit(e) {
         e.preventDefault()
-        console.log(e)
-        console.log(state)
         
-        const {name, message} = state
-        socket.emit('message', {name, message})
-        setState({message:'', name})
+        const messageObject = {
+            body: message,
+            id: yourID
+        }
+
+        setMessage("")
+
+        socket.emit('send message', messageObject)
     }
 
-    const renderChat = () => {
-        return chat.map(({name, message,}, index) => (
-            <div className="rendered__chat" key={index}>
-                <h3 className="rendered__name">{name}: <span className="rendered__message">{message}</span></h3>
-            </div>
-        ))
-    }
+    // function renderChat() {
+    //     return messages.map((message, index) => (
+    //         <div className="rendered__chat" key={index}>
+    //             <h3 className="rendered__name">Name: <span className="rendered__message">{message.body}</span></h3>
+    //         </div>
+    //     ))
+    // }
 
 
     return (
         <div className="chat__container">
             <div className="render__chat">
-                {renderChat()}
+                {messages.map((message, index) => {
+                    if(message.id === yourID){
+                        return (
+                            <div className="rendered__chat" key={index}>
+                                <h3 className="rendered__name">Name: <span className="rendered__message">{message.body}</span></h3>
+                            </div>
+                        )
+                    }
+                    return (
+                        <div className="rendered__chat" key={index}>
+                            <h3 className="rendered__name">Name: <span className="their__message">{message.body}</span></h3>
+                        </div>
+                    )
+                })}
             </div>
             <form onSubmit={onMessageSubmit}>
                 <h2>ChatBox</h2>
-                <div className="name__field">
-                    <TextField
-                    name="name"
-                    onChange={ res=> onTextChange(res)}
-                    value={state.name}
-                    label="Name
-                    "/>
-                </div>
                 <div className="chat__message">
                     <TextField
                     name="message"
-                    onChange={res => onTextChange(res)}
-                    value={state.message}
-                    label="Message"
+                    onChange={onTextChange}
+                    value={message}
+                    label="Say something..."
                     id="outlined-multiline-static"
                     variant="outlined"
                     fullWidth

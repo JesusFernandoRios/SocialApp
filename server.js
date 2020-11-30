@@ -60,10 +60,9 @@ app.get('/social/card', (req, res) => {
 
 // SocketIo Server Init
 io.on("connection", (socket) => {
-    console.log("your id", socket.id)
-
-    socket.on("message", ({name, message}) => {
-        io.emit('message', {name, message})
+    socket.emit("your id", socket.id)
+    socket.on("send message", body => {
+        io.emit('message', body)
     })
 });
 
