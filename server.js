@@ -1,7 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import Cards from './models/dbCards.js'
+import authRouter from './routes/authenticationRoutes.js'
 import Cors from 'cors'
+import dotenv from 'dotenv'
 import { createServer } from "http";
 import { Server } from "socket.io";
 
@@ -17,19 +19,23 @@ const io = new Server(httpServer, {
 }
 );
 
-
-const connection_url = 'mongodb+srv://Admin:3ngLrhWieXCeqSWL@cluster0.ebinh.mongodb.net/social-app?retryWrites=true&w=majority'
+// 
+dotenv.config()
 
 // middleware
 app.use(express.json())
 app.use(Cors())
 
 // DB configuration
-mongoose.connect(connection_url,{
+mongoose.connect(
+    process.env.DB_CONNECT,
+    {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
-});
+    },
+() => console.log('connected to DB')
+);
 
 // API Endpoints
 app.get('/',(req, res) => {
@@ -57,6 +63,11 @@ app.get('/social/card', (req, res) => {
         }
     })
 })
+
+// AUTHENTICATION API
+app.use('/api/user', authRouter)
+
+
 
 // SocketIo Server Init
 io.on("connection", (socket) => {

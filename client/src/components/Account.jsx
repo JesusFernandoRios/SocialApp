@@ -11,7 +11,7 @@ function Account() {
         isAuthenticated && (
             <div className="account__user">
                 <div className="user__image">
-                    <img className="user__image"src={user.picture} alt=""/>
+                    <img className="user__image"src={user.picture} alt={user.name}/>
                 </div>
                 
                 <h2 className="user__name">{user.name}</h2>
