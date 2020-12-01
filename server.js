@@ -6,6 +6,7 @@ import Cors from 'cors'
 import dotenv from 'dotenv'
 import { createServer } from "http";
 import { Server } from "socket.io";
+import {auth} from './verifyToken.js'
 
 // app configuration
 const app = express()
@@ -42,7 +43,7 @@ app.get('/',(req, res) => {
     res.status(200).send("Server is On")
 })
 
-app.post('/social/card', (req, res) => {
+app.post('/social/card', auth, (req, res) => {
     const dbCard = req.body
 
     Cards.create(dbCard, (err, data) => {

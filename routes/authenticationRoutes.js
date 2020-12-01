@@ -2,6 +2,7 @@ import { Router } from 'express'
 import Users from '../models/auth.js'
 import {registerValidation, loginValidation} from '../validation.js'
 import bcrypt from 'bcryptjs'
+import Jwt from 'jsonwebtoken'
 
 let router = Router()
 
@@ -50,7 +51,9 @@ router.post('/login', async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if(!validPass) return res.status(400).send("Password does not exist")
 
-    res.send("logged In")
+    // creating and assigning token
+    const token = Jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
+    res.header('auth-token', token).send(token)
 })
 
 export default router;
