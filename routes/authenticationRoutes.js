@@ -1,15 +1,11 @@
 import { Router } from 'express'
 import Users from '../models/auth.js'
-import Joi from '@hapi/joi'
+import {registerValidation, loginValidation} from '../validation.js'
 
 let router = Router()
 
 // VALIDATION
-const schema = Joi.object({
-    name: Joi.string().min(6).required(),
-    email: Joi.string().min(6).required().email(),
-    password: Joi.string().min(6).required()
-})
+
 
 router.post('/register', async (req, res) => {
 
