@@ -15,7 +15,7 @@ export default function Header() {
             </IconButton>
 
             <Link to="/account">
-            Account
+                {user ? "Account" : null}
             </Link>
             
             <img 

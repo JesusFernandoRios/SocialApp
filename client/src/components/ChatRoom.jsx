@@ -66,6 +66,7 @@ function ChatRoom() {
                                 <div className="rendered__chat" key={index}>
                                     <h3 className="rendered__name">Name: <span className="rendered__message">{message.body}</span></h3>
                                 </div>
+                                
                             )
                         }
                         return (

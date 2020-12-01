@@ -16,6 +16,7 @@ function App() {
             <Account/>
           </Route>
           <Route path='/chat'>
+            <Header/>
             <ChatRoom/>
           </Route>
           <Route path='/'>
