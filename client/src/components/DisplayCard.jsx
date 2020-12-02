@@ -12,9 +12,12 @@ function DisplayCard() {
             const req = await axios.get('/social/card')
 
             setPeople(req.data)
+            
         };
 
         fetchData()
+        console.log(setPeople)
+    
     },[])
 
 

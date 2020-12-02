@@ -8,6 +8,11 @@ import ChatRoom from './components/ChatRoom'
 import Login from './components/Login'
 
 function App() {
+
+  const [userData, setUserData] = useState({
+    token: undefined,
+    user: undefined
+  })
   return (
     <Router>
         <Switch>

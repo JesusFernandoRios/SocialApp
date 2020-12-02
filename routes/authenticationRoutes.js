@@ -54,6 +54,18 @@ router.post('/login', async (req, res) => {
     // creating and assigning token
     const token = Jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
     res.header('auth-token', token).send(token)
+
+    console.log('recieved!!')
+})
+
+router.get('/register', (req, res) => {
+    Users.find((err, data) => {
+        if(err){
+            res.status(500).send(err)
+        } else {
+            res.status(200).send(data)
+        }
+    })
 })
 
 export default router;
