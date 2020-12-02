@@ -70,6 +70,7 @@ app.use('/api/user', authRouter)
 
 
 
+
 // SocketIo Server Init
 io.on("connection", (socket) => {
     socket.emit("your id", socket.id)

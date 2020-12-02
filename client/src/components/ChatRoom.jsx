@@ -3,11 +3,13 @@ import './styling/chatroom.css'
 import { io } from 'socket.io-client'
 import TextField from '@material-ui/core/TextField'
 import ScrollToBottom from 'react-scroll-to-bottom'
+import { useStateValue } from '../utils/StateProvider'
 
 const socket = io("http://localhost:3001/");
 
 
 function ChatRoom() {
+    const [users] = useStateValue()
     const [yourID, setYourId] = useState()
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
@@ -56,7 +58,7 @@ function ChatRoom() {
                         if(message.id === yourID){
                             return (
                                 <div className="rendered__chat" key={index}>
-                                    <h3 className="rendered__name">Name: <span className="rendered__message">{message.body}</span></h3>
+                                    <h3 className="rendered__name">name: <span className="rendered__message">{message.body}</span></h3>
                                 </div>
                                 
                             )

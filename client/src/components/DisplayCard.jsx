@@ -2,8 +2,10 @@ import React, {useState, useEffect} from 'react'
 import './styling/displaycard.css'
 import TinderCard from 'react-tinder-card'
 import axios from '../axios.js'
+import { useStateValue } from '../utils/StateProvider'
 
 function DisplayCard() {
+    const[ {users}, dispatch] = useStateValue()
     const [people, setPeople] = useState([])
 
     useEffect(() => {
@@ -16,8 +18,7 @@ function DisplayCard() {
         };
 
         fetchData()
-        console.log(setPeople)
-    
+        
     },[])
 
 

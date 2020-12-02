@@ -1,13 +1,22 @@
 import React, {useState} from 'react'
 import './styling/login.css'
 import Axios from '../axios.js'
+import { useStateValue } from '../utils/StateProvider'
+import {Link , useHistory} from 'react-router-dom'
+import { useEffect } from 'react'
 
 
 export default function Login() {
-
+    const history = useHistory()
+    const [{users} , dispatch] = useStateValue()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    useEffect(() => {
+        let user = localStorage.getItem("token")
+
+        if(user) history.push('/dashboard')
+    },[])
 
     function onSubmit (e){
         e.preventDefault()
@@ -16,20 +25,16 @@ export default function Login() {
             password: password
         }).then((response) => {
             console.log(response)
-            if(response.data){
-                localStorage.setItem('token', response.data)
-            }
-
+            
+            localStorage.setItem("token", response.data)
+            dispatch({
+                type: "SET_USER",
+                users: response.data
+                
+            })
+            if(response.statusText === "OK") history.push('/dashboard')
         })
     }
-
-    function sendData(e){
-        e.preventDefault()
-        
-    }
-
-    console.log(email)
-    console.log(password)
 
     return (
         <div className="login__container">
@@ -53,9 +58,12 @@ export default function Login() {
                  />
 
 			    <button type="submit" id="login__button">Login</button>
+
+                <Link to='/register'>
+                <button className='register__button'>Or Register Here</button>
+                </Link>
 		    </form>
 
-            <button onClick={sendData}>get data </button>
         </div>
 
     )
