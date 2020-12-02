@@ -9,7 +9,7 @@ const socket = io("http://localhost:3001/");
 
 
 function ChatRoom() {
-    const [users] = useStateValue()
+    const [{users}] = useStateValue()
     const [yourID, setYourId] = useState()
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
@@ -26,7 +26,7 @@ function ChatRoom() {
 
     },[])
 
-
+    console.log(users)
     // functions
 
     function receivedMessage (message) {
@@ -58,7 +58,7 @@ function ChatRoom() {
                         if(message.id === yourID){
                             return (
                                 <div className="rendered__chat" key={index}>
-                                    <h3 className="rendered__name">name: <span className="rendered__message">{message.body}</span></h3>
+                                    <h3 className="rendered__name">{users}: <span className="rendered__message">{message.body}</span></h3>
                                 </div>
                                 
                             )

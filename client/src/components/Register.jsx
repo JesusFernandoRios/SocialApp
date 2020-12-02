@@ -26,7 +26,7 @@ export default function Register() {
         }).then((response) => {
             console.log(response)
             
-            localStorage.setItem("token", response.data.user)
+            localStorage.setItem("name", response.data.user)
             dispatch({
                 type: "SET_USER",
                 users:response.data.user,
@@ -34,7 +34,6 @@ export default function Register() {
             })
             if(response.statusText === "OK") history.push('/dashboard')
         })
-        localStorage.setItem('name', name)
     }
 
 return (

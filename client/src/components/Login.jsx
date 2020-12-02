@@ -26,7 +26,7 @@ export default function Login() {
         }).then((response) => {
             console.log(response)
             
-            localStorage.setItem("token", response.data)
+            localStorage.setItem("token", response.data.token);
             dispatch({
                 type: "SET_USER",
                 users: response.data

@@ -15,11 +15,12 @@ function App() {
 
   useEffect(() => {
     let user = localStorage.getItem('token')
+    let name = localStorage.getItem('name')
 
     if(user){
       dispatch({
         type:'SET_USER',
-        users: user
+        users: name
       })
     }else{
       dispatch({
