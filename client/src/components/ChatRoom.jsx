@@ -48,14 +48,6 @@ function ChatRoom() {
         socket.emit('send message', messageObject)
     }
 
-    // function renderChat() {
-    //     return messages.map((message, index) => (
-    //         <div className="rendered__chat" key={index}>
-    //             <h3 className="rendered__name">Name: <span className="rendered__message">{message.body}</span></h3>
-    //         </div>
-    //     ))
-    // }
-
 
     return (
         <div className="chat__container">

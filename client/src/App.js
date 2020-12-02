@@ -4,16 +4,15 @@ import './App.css';
 import DisplayCard from './components/DisplayCard';
 import Header from './components/Header'
 import SwipeButtons from './components/SwipeButtons'
-import User from './components/User'
-import Account from './components/Account'
 import ChatRoom from './components/ChatRoom'
+import Login from './components/Login'
 
 function App() {
   return (
     <Router>
         <Switch>
-          <Route path='/account'>
-            <Account/>
+          <Route path='/login'>
+            <Login/>
           </Route>
           <Route path='/chat'>
             <Header/>
@@ -27,7 +26,6 @@ function App() {
             {/* buttons */}
             <SwipeButtons/>
             {/* user info */}
-            <User/>
           </Route>
         </Switch>
     </Router>
