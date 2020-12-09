@@ -13,9 +13,14 @@ function ChatRoom() {
     const [yourID, setYourId] = useState()
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
+    const [name, setName] = useState('');
 
     useEffect(() => {
         
+        let userName = localStorage.getItem('name')
+
+        setName(userName)
+
         socket.on('your id', id => {
             setYourId(id)
         })
@@ -26,7 +31,6 @@ function ChatRoom() {
 
     },[])
 
-    console.log(users)
     // functions
 
     function receivedMessage (message) {
@@ -58,14 +62,14 @@ function ChatRoom() {
                         if(message.id === yourID){
                             return (
                                 <div className="rendered__chat" key={index}>
-                                    <h3 className="rendered__name">{users}: <span className="rendered__message">{message.body}</span></h3>
+                                    <h3 className="rendered__name">{name}: <span className="rendered__message">{message.body}</span></h3>
                                 </div>
                                 
                             )
                         }
                         return (
                             <div className="their__chat" key={index}>
-                                <h3 className="rendered__name">Name: <span className="their__message">{message.body}</span></h3>
+                                <h3 className="rendered__name">message: <span className="their__message">{message.body}</span></h3>
                             </div>
                         )
                     })}

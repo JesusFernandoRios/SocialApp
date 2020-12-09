@@ -4,7 +4,6 @@ import './styling/register.css'
 import Axios from '../axios.js'
 import { useStateValue } from '../utils/StateProvider'
 import {useHistory} from 'react-router-dom'
-import { useEffect } from 'react'
 
 
 export default function Register() {
@@ -26,7 +25,7 @@ export default function Register() {
         }).then((response) => {
             console.log(response)
             
-            localStorage.setItem("name", response.data.user)
+            localStorage.setItem("newUserId", response.data.user)
             dispatch({
                 type: "SET_USER",
                 users:response.data.user,

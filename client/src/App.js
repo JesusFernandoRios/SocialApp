@@ -11,16 +11,15 @@ import { useStateValue } from './utils/StateProvider';
 
 function App() {
 
-  const [{users}, dispatch] = useStateValue()
+  const [{ users }, dispatch] = useStateValue()
 
   useEffect(() => {
-    let user = localStorage.getItem('token')
-    let name = localStorage.getItem('name')
+    let user = localStorage.getItem('LoginToken')
 
     if(user){
       dispatch({
         type:'SET_USER',
-        users: name
+        users: user
       })
     }else{
       dispatch({
@@ -35,7 +34,7 @@ function App() {
   return (
     <Router>
         <Switch>
-          <Route path='/dashboard'>
+          <Route path={users ? '/dashboard' : '/'}>
             {/* Header */}
             <Header/>
             {/* display cards */}
@@ -44,7 +43,7 @@ function App() {
             <SwipeButtons/>
             {/* user info */}
           </Route>
-          <Route path='/chat'>
+          <Route path={users ? '/chat' : '/'}>
             <Header/>
             <ChatRoom/>
           </Route>

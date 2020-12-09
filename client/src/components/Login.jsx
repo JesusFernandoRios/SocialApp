@@ -13,7 +13,7 @@ export default function Login() {
     const [password, setPassword] = useState("")
 
     useEffect(() => {
-        let user = localStorage.getItem("token")
+        let user = localStorage.getItem("LogInToken")
 
         if(user) history.push('/dashboard')
     },[])
@@ -26,13 +26,13 @@ export default function Login() {
         }).then((response) => {
             console.log(response)
             
-            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("LogInToken", response.data);
             dispatch({
                 type: "SET_USER",
                 users: response.data
                 
             })
-            if(response.statusText === "OK") history.push('/dashboard')
+            if(response.status === "OK") history.push('/dashboard')
         })
     }
 

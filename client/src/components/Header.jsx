@@ -8,22 +8,23 @@ import {Link} from 'react-router-dom'
 export default function Header() {
     return (
         <div className='header'>
-            <IconButton >
+            <IconButton>
                <PersonIcon fontSize="large" className="header__icon"/> 
             </IconButton>
 
+            <Link to='/dashboard'>
+                <img 
+                className="header__logo"
+                src="http://pngimg.com/uploads/github/github_PNG46.png" alt="logo"
+                />
+            </Link>
             
-            <img 
-            className="header__logo"
-            src="http://pngimg.com/uploads/github/github_PNG46.png" alt="logo"
-            />
 
             <Link to="chat">
                 <IconButton>
                     <ForumIcon fontSize="large" className="header__icon"/>
                 </IconButton>
             </Link>
-
 
         </div>
     )
