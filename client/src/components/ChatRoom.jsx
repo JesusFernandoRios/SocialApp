@@ -17,10 +17,6 @@ function ChatRoom() {
 
     useEffect(() => {
         
-        let userName = localStorage.getItem('name')
-
-        setName(userName)
-
         socket.on('your id', id => {
             setYourId(id)
         })
@@ -74,8 +70,15 @@ function ChatRoom() {
                         )
                     })}
             </ScrollToBottom>
+            
+            <div className="select__name">
+                <h3>Set your name</h3>
+                <TextField
+                variant="outlined"
+                size="small"
+                onChange={(e) => setName(e.target.value)}></TextField>
+            </div>
             <form onSubmit={onMessageSubmit}>
-                <h2>ChatBox</h2>
                 <div className="chat__message">
                     <TextField
                     name="message"
