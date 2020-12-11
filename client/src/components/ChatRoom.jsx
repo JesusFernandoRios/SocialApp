@@ -3,14 +3,13 @@ import './styling/chatroom.css'
 import { io } from 'socket.io-client'
 import TextField from '@material-ui/core/TextField'
 import ScrollToBottom from 'react-scroll-to-bottom'
-import { useStateValue } from '../utils/StateProvider'
 
 const socket = io("http://localhost:3001/");
 
 
 function ChatRoom() {
-    const [{users}] = useStateValue()
     const [yourID, setYourId] = useState()
+    const [TheirID, setTheirID] = useState()
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [name, setName] = useState('');
@@ -18,9 +17,12 @@ function ChatRoom() {
     useEffect(() => {
         
         socket.on('your id', id => {
-            setYourId(id)
+            if( id === socket.id){
+                setYourId(id)
+            }else{
+                setTheirID(id)
+            }
         })
-
         socket.on('message', message => {
             receivedMessage(message)
         })
@@ -35,17 +37,20 @@ function ChatRoom() {
 
     function onTextChange(res) {
         setMessage(res.target.value)
+    
     }
 
     function onMessageSubmit(e) {
         e.preventDefault()
         
         const messageObject = {
+            name: name,
             body: message,
             id: yourID
         }
 
         setMessage("")
+        setName("")
 
         socket.emit('send message', messageObject)
     }
@@ -58,27 +63,28 @@ function ChatRoom() {
                         if(message.id === yourID){
                             return (
                                 <div className="rendered__chat" key={index}>
-                                    <h3 className="rendered__name">{name}: <span className="rendered__message">{message.body}</span></h3>
+                                    <h3 className="rendered__name">{yourID}: <span className="rendered__message">{message.body}</span></h3>
                                 </div>
                                 
                             )
                         }
                         return (
                             <div className="their__chat" key={index}>
-                                <h3 className="rendered__name">message: <span className="their__message">{message.body}</span></h3>
+                                <h3 className="rendered__name">{TheirID}: <span className="their__message">{message.body}</span></h3>
                             </div>
                         )
                     })}
             </ScrollToBottom>
             
-            <div className="select__name">
-                <h3>Set your name</h3>
-                <TextField
-                variant="outlined"
-                size="small"
-                onChange={(e) => setName(e.target.value)}></TextField>
-            </div>
             <form onSubmit={onMessageSubmit}>
+                <h2>Messenger</h2>
+                <div className="chat__name">
+                    <TextField name='name'
+                    onChange={ e => onTextChange(e)}
+                    value={name}
+                    label="Name"
+                    />
+                </div>
                 <div className="chat__message">
                     <TextField
                     name="message"

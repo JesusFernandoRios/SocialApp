@@ -69,12 +69,12 @@ app.get('/social/card', (req, res) => {
 app.use('/api/user', authRouter)
 
 
-
-
 // SocketIo Server Init
 io.on("connection", (socket) => {
     socket.emit("your id", socket.id)
+
     socket.on("send message", body => {
+
         io.emit('message', body)
     })
 });
